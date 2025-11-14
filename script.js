@@ -8,7 +8,17 @@ let piezas = [];
 let piezaSeleccionada = null;
 
 // Detectar base path para GitHub Pages
-const basePath = window.location.pathname.split('/').slice(0, -1).join('/') || '';
+// En GitHub Pages: /repo-name/ → basePath = '/repo-name'
+// En local: / → basePath = ''
+let basePath = window.location.pathname;
+if (basePath.endsWith('/')) {
+  basePath = basePath.slice(0, -1);
+}
+// Si está en raíz (localhost o dominio), basePath es ''
+if (basePath === '') {
+  basePath = '';
+}
+console.log('basePath detectado:', basePath);
 
 // Lista de animales (se intentará cargar desde un manifiesto); si falla, se usa peppa.png
 let animalesList = [];
@@ -55,27 +65,37 @@ async function cargarListaAnimales() {
     "Animales/manifest.json",
     "animales/manifest.json"
   ];
+  console.log('Intentando cargar manifest desde:', posibles);
+  
   for (const url of posibles) {
     try {
+      console.log('Probando:', url);
       const res = await fetch(url);
-      if (!res.ok) continue;
+      if (!res.ok) {
+        console.log(`No encontrado: ${url} (${res.status})`);
+        continue;
+      }
       const data = await res.json();
+      console.log('Manifest cargado desde:', url, data);
       if (Array.isArray(data) && data.length) {
         // Ajustar rutas con basePath si es necesario
         animalesList = data.map(p => {
           if (p.startsWith('http')) return p; // URL absoluta
-          if (basePath && !p.includes(basePath)) {
+          // Si basePath existe y la ruta no lo incluye, añadirlo
+          if (basePath && !p.startsWith(basePath) && !p.startsWith('/')) {
             return basePath + '/' + p;
           }
           return p;
         });
+        console.log('animalesList procesada:', animalesList);
         return;
       }
     } catch (e) {
-      // Ignorar y probar siguiente
+      console.log(`Error cargando ${url}:`, e.message);
     }
   }
   // Fallback simple
+  console.log('Usando fallback: peppa.png');
   animalesList = ["peppa.png"];
 }
 
