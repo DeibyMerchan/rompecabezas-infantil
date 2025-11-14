@@ -60,9 +60,9 @@ const slotsPiezas = document.querySelectorAll(".slot-piezas");
 // Cargar listado de animales desde un manifiesto JSON si existe
 async function cargarListaAnimales() {
   const posibles = [
-    `${basePath}/Animales/manifest.json`,
     `${basePath}/animales/manifest.json`,
-    "Animales/manifest.json",
+    `${basePath}/animales/manifest.json`,
+    "animales/manifest.json",
     "animales/manifest.json"
   ];
   console.log('Intentando cargar manifest desde:', posibles);
