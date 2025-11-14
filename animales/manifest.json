@@ -1,15 +1,15 @@
 [
-  "Animales/Abeja.png",
-  "Animales/Ardilla.png",
-  "Animales/Camaleón.png",
-  "Animales/Cerdito.png",
-  "Animales/Gato.png",
-  "Animales/Hámster.png",
-  "Animales/Koala.png",
-  "Animales/Oso.png",
-  "Animales/Pajarito.png",
-  "Animales/Perezoso.png",
-  "Animales/Perro.png",
-  "Animales/Tortuga.png",
-  "Animales/Vaca.png"
+  "animales/Abeja.png",
+  "animales/Ardilla.png",
+  "animales/Camaleón.png",
+  "animales/Cerdito.png",
+  "animales/Gato.png",
+  "animales/Hámster.png",
+  "animales/Koala.png",
+  "animales/Oso.png",
+  "animales/Pajarito.png",
+  "animales/Perezoso.png",
+  "animales/Perro.png",
+  "animales/Tortuga.png",
+  "animales/Vaca.png"
 ]
