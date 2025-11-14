@@ -7,6 +7,9 @@ const filas = 2;
 let piezas = [];
 let piezaSeleccionada = null;
 
+// Detectar base path para GitHub Pages
+const basePath = window.location.pathname.split('/').slice(0, -1).join('/') || '';
+
 // Lista de animales (se intentará cargar desde un manifiesto); si falla, se usa peppa.png
 let animalesList = [];
 let lastAnimalIndex = -1;
@@ -46,14 +49,26 @@ const slotsPiezas = document.querySelectorAll(".slot-piezas");
 
 // Cargar listado de animales desde un manifiesto JSON si existe
 async function cargarListaAnimales() {
-  const posibles = ["Animales/manifest.json", "animales/manifest.json"];
+  const posibles = [
+    `${basePath}/Animales/manifest.json`,
+    `${basePath}/animales/manifest.json`,
+    "Animales/manifest.json",
+    "animales/manifest.json"
+  ];
   for (const url of posibles) {
     try {
       const res = await fetch(url);
       if (!res.ok) continue;
       const data = await res.json();
       if (Array.isArray(data) && data.length) {
-        animalesList = data.map(p => p);
+        // Ajustar rutas con basePath si es necesario
+        animalesList = data.map(p => {
+          if (p.startsWith('http')) return p; // URL absoluta
+          if (basePath && !p.includes(basePath)) {
+            return basePath + '/' + p;
+          }
+          return p;
+        });
         return;
       }
     } catch (e) {
