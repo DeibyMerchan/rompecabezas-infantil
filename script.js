@@ -361,3 +361,4 @@ window.addEventListener('DOMContentLoaded', async () => {
   setAnimalByIndex(idx);
   reiniciarJuego();
 });
+// cambios realizados 
