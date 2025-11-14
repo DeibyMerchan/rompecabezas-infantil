@@ -1,0 +1,192 @@
+body {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  text-align: center;
+  background: linear-gradient(to bottom, #a0d8ef, #f9f9f9);
+  margin: 0;
+  padding: 20px;
+  height: 100vh;
+  overflow: hidden;
+}
+
+:root {
+  --cell-size: min(28vw, 150px);
+}
+
+h1 {
+  color: #ff4081;
+  font-size: clamp(1.3rem, 5vw, 2rem);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.piezas, .tablero {
+  display: grid;
+  grid-template-columns: repeat(3, var(--cell-size));
+  grid-template-rows: repeat(2, var(--cell-size));
+  gap: 0;
+  border: 5px solid #ffb6c1;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  max-width: calc(var(--cell-size) * 3);
+}
+
+.pieza, .slot {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.pieza {
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: grab;
+  border: 1px solid #ccc;
+  transition: transform 0.2s ease;
+}
+
+.pieza:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+
+.pieza.dragging-touch {
+  transition: none !important;
+  transform: none !important;
+  pointer-events: none;
+}
+
+.felicitacion {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  color: #ff4081;
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  font-weight: bold;
+  padding: clamp(20px, 5vw, 50px) clamp(20px, 5vw, 50px);
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  z-index: 10;
+  animation: pop 0.3s ease;
+  max-width: 90vw;
+  word-wrap: break-word;
+}
+
+@keyframes pop {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.confeti, .globo {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10;
+  animation-timing-function: linear;
+}
+
+.confeti {
+  width: 10px;
+  height: 10px;
+  background-color: hsl(var(--hue), 80%, 60%);
+  animation: caer 3s forwards;
+}
+
+@keyframes caer {
+  to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.globo {
+  width: 40px;
+  height: 50px;
+  background-color: hsl(var(--hue), 80%, 60%);
+  border-radius: 50% 50% 45% 45%;
+  animation: subir 6s forwards;
+}
+
+@keyframes subir {
+  to { transform: translateY(-110vh); opacity: 0; }
+}
+
+.mensaje {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  color: #ff4081;
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  font-weight: bold;
+  padding: clamp(20px, 5vw, 50px) clamp(20px, 5vw, 50px);
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  display: none;
+  z-index: 10;
+  animation: pop 0.3s ease;
+  max-width: 90vw;
+  word-wrap: break-word;
+}
+
+
+
+button {
+  padding: 12px 25px;
+  font-size: clamp(14px, 3vw, 18px);
+  background: #ff4081;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #d81b60;
+}
+
+/* Estilos para el botón siguiente nivel que añadimos dinámicamente */
+#siguiente-nivel {
+  padding: clamp(10px, 3vw, 14px) clamp(14px, 3vw, 18px);
+  font-size: clamp(14px, 3vw, 16px);
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  position: fixed;
+  right: clamp(10px, 3vw, 20px);
+  bottom: clamp(10px, 3vw, 20px);
+  z-index: 9999;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    margin-bottom: 5px;
+  }
+
+  .contenedor {
+    gap: 15px;
+  }
+
+  .felicitacion, .mensaje {
+    padding: clamp(15px, 4vw, 30px) clamp(15px, 4vw, 30px);
+  }
+}
+
+@media (min-width: 700px) {
+  .contenedor {
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+  }
+}
